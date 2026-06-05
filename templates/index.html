@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>News Sentiment Analyser</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        input { padding: 8px; width: 300px; }
+        button { padding: 8px 16px; background: #3498db; color: white; border: none; cursor: pointer; }
+        .positive { color: #2ecc71; font-weight: bold; }
+        .negative { color: #e74c3c; font-weight: bold; }
+        .article { border-bottom: 1px solid #eee; padding: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>News Sentiment Analyser</h1>
+    <form method="POST">
+        <input type="text" name="topic" placeholder="Enter a topic..." value="{{ topic }}">
+        <button type="submit">Analyse</button>
+    </form>
+
+    {% if articles %}
+        <h2>Results for '{{ topic }}'</h2>
+        <img src="/static/sentiment_chart.png" width="600">
+        {% for article in articles %}
+        <div class="article">
+            <strong>{{ article.title }}</strong><br>
+            <small>{{ article.source }} | {{ article.published }}</small>
+            <span class="{{ article.sentiment | lower }}"> {{ article.sentiment }} {{ article.confidence }}%</span>
+        </div>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>

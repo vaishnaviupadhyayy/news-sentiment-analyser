@@ -1,3 +1,5 @@
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -20,5 +22,5 @@ def plot_sentiment(articles: list[dict], topic: str):
     plt.ylabel("Number of Articles")
     plt.xticks(rotation=0)
     plt.tight_layout()
-    plt.savefig("sentiment_chart.png")
+    plt.savefig("static/sentiment_chart.png")
     print("\nChart saved as sentiment_chart.png")
