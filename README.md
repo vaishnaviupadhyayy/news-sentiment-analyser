@@ -20,6 +20,9 @@ sentiment as POSITIVE or NEGATIVE, and displays the results with a bar chart.
 6. Run: `python3 app.py`
 7. Open `http://127.0.0.1:5000` in your browser
 
+## Live Demo:
+https://web-production-4eabc.up.railway.app/
+
 ## What I learned
 - How to use HuggingFace transformer models for NLP tasks
 - Identified domain mismatch: DistilBERT was fine-tuned on movie reviews,
