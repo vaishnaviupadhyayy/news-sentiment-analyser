@@ -1,14 +1,19 @@
-from transformers import pipeline
+import requests
+import os
+from dotenv import load_dotenv
 
-sentiment_model = pipeline(
-    "sentiment-analysis",
-    model="distilbert-base-uncased-finetuned-sst-2-english"
-)
+load_dotenv()
+
+HF_TOKEN = os.getenv("HF_TOKEN")
+API_URL = "https://api-inference.huggingface.co/models/distilbert-base-uncased-finetuned-sst-2-english"
 
 def analyse_sentiment(articles: list[dict]) -> list[dict]:
+    headers = {"Authorization": f"Bearer {HF_TOKEN}"}
     titles = [a["title"] for a in articles]
-    results = sentiment_model(titles, truncation=True)
+    response = requests.post(API_URL, headers=headers, json={"inputs": titles})
+    results = response.json()
     for article, result in zip(articles, results):
-        article["sentiment"] = result["label"]
-        article["confidence"] = round(result["score"] * 100, 1)
+        top = max(result, key=lambda x: x["score"])
+        article["sentiment"] = top["label"]
+        article["confidence"] = round(top["score"] * 100, 1)
     return articles
